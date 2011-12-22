@@ -6,8 +6,7 @@
 
 (defn- undo
   ([rdr c & more]
-    (.unread rdr (char-array more))
-    (.invoke (clojure.lang.LispReader$ListReader.) rdr c))
+    (.unread rdr (char-array more)) (undo rdr c))
   ([rdr c]
     (.invoke (clojure.lang.LispReader$ListReader.) rdr c)))
 
