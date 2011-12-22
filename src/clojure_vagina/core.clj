@@ -6,16 +6,16 @@
 
 (defn- undo
   ([rdr c & more]
-    (.unread rdr (char-array (map char more)))
+    (.unread rdr (char-array more))
     (.invoke (clojure.lang.LispReader$ListReader.) rdr c))
   ([rdr c]
     (.invoke (clojure.lang.LispReader$ListReader.) rdr c)))
 
 (reader-macro \( (fn [rdr _]
-  (let [a (.read rdr)]
-    (if (= (int \') a)
-      (let [b (.read rdr)]
-        (if (= (int \)) b)
+  (let [a (char (.read rdr))]
+    (if (= \' a)
+      (let [b (char (.read rdr))]
+        (if (= \) b)
           "vagina"
           (undo rdr \( a b)))
       (undo rdr \( a)))))
